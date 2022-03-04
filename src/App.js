@@ -34,12 +34,63 @@ class App extends Component{
       console.log("vowelsArray:", vowelsArray)
 
       // your code here!
-
       // Remember: console.log is your friend :)
 
 
+      //input ---- words that begin with a vowel
+      //output --- words + "way"
+      //declare variables for vowel using the Regex .match and index of array
+      let pigLatin = currentWord + "way"
+      let pig = currentWord.match(/[y]/gi) || 0
+      let pigY = currentWord.indexOf(pig[0])
+      if(vowelsArray.indexOf(currentWord[0])>-1) {
+        return pigLatin
+      }
+
+      //input ---- words without vowel
+      //output --- move y to the beginning of word and end with "ay"
+      //declare variables to create piglatinY word with substring
+      else if(vowelsArray.length === 0) {
+        let pig = currentWord.match(/[y]/gi) || 0
+        let pigY = currentWord.indexOf(pig[0])
+        let pigLatinY = currentWord.substring(pigY) + currentWord.substring(0,pigY) + "ay"
+        return pigLatinY
+      }
+
+      //input ---- words with "qu"
+      //output --- move "qu" and that first character to the end and begin the word with next vowel and end with "ay"
+      //declare variables to create pigQU word with substring
+      else if(currentWord.substring(1, 3) === "qu") {
+        let firstPig = currentWord.match(/[aeiou]/gi) || 3
+        let vowel = currentWord.indexOf(firstPig[1])
+        let pigQU = currentWord.substring(vowel) + currentWord.substring(0, vowel) + "ay"
+        return pigQU
+      }
+
+      //input ---- words with "qu" in the beginning
+      //output --- move "qu" to the end and begin the word with next vowel and end with "ay"
+      //declare variables to create pigLatinQU word with substring
+      else if(currentWord.substring(0, 2) === "qu") {
+        let firstPig = currentWord.match(/[aeiou]/gi) || 2
+        let vowel = currentWord.indexOf(firstPig[1])
+        let pigLatinQU = currentWord.substring(vowel) + currentWord.substring(0, vowel) + "ay"
+        return pigLatinQU
+      }
+
+      //input ---- words beginning with consonants
+      //output --- move consonants that preceed the first vowel to the end and begin the word with vowel and end with "ay"
+      //declare variables to search for vowels and give index to create piglatin word with substring
+      else {
+        let secondPig = currentWord.match(/[aeiou]/gi) || 0
+        let vowelPig = currentWord.indexOf(secondPig[0])
+        console.log("secondPig:", secondPig)
+        console.log("vowelPig:", vowelPig)
+        let pigLat = currentWord.substring(vowelPig) + currentWord.substring(0, vowelPig) + "ay"
+        return pigLat
+      }
+
       // ACTION ITEM: change the value of currentWord to the name of whatever variable you made containing your Pig Latin'd word
-      return currentWord
+      // return currentWord
     })
 
 
@@ -99,7 +150,7 @@ class App extends Component{
           <button onClick={this.restartGame}>Clear</button>
         </div>
         <p>{this.state.phraseTranslated}</p>
-        <footer>Coded by ~your name here~</footer>
+        <footer>Coded by 2022 LEARN Instructors</footer>
       </>
     )
   }
